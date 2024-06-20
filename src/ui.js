@@ -15,12 +15,6 @@ import "reactflow/dist/style.css";
 
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
-const nodeTypes = {
-  customInput: InputNode,
-  llm: LLMNode,
-  customOutput: OutputNode,
-  text: TextNode,
-};
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -31,6 +25,13 @@ const selector = (state) => ({
   onEdgesChange: state.onEdgesChange,
   onConnect: state.onConnect,
 });
+
+const nodeTypes = {
+  customInput: InputNode,
+  llm: LLMNode,
+  customOutput: OutputNode,
+  text: TextNode,
+};
 
 export const PipelineUI = () => {
   const reactFlowWrapper = useRef(null);
@@ -45,7 +46,7 @@ export const PipelineUI = () => {
     onConnect,
   } = useStore(selector, shallow);
 
-  console.log({ nodes, edges });
+  console.log("nlkvsfhjb", { nodes, edges });
 
   const getInitNodeData = (nodeID, type) => {
     let nodeData = { id: nodeID, nodeType: `${type}` };

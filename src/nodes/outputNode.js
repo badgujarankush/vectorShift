@@ -1,47 +1,36 @@
 // outputNode.js
+import { Position } from "reactflow";
+import NodeTemp from "../components/NodeTemp";
+import { FIELD_TYPES } from "../constants";
 
-import { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+const outputNodeSpecs = {
+  label: "Output",
+  fields: [
+    {
+      name: "name",
+      label: "Name",
+      type: FIELD_TYPES.TEXT,
+      defaultValue: "Output-1",
+    },
+    {
+      name: "type",
+      label: "Type",
+      type: FIELD_TYPES.SELECT,
+      options: ["Text", "File"],
+      defaultValue: "Text",
+    },
+  ],
+  handles: [
+    {
+      name: "value",
+      label: "Value",
+      type: "target",
+      position: Position.Left,
+      style: { top: "50%" },
+    },
+  ],
+};
 
-export const OutputNode = ({ id, data }) => {
-  const [currName, setCurrName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));
-  const [outputType, setOutputType] = useState(data.outputType || 'Text');
-
-  const handleNameChange = (e) => {
-    setCurrName(e.target.value);
-  };
-
-  const handleTypeChange = (e) => {
-    setOutputType(e.target.value);
-  };
-
-  return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-value`}
-      />
-      <div>
-        <span>Output</span>
-      </div>
-      <div>
-        <label>
-          Name:
-          <input 
-            type="text" 
-            value={currName} 
-            onChange={handleNameChange} 
-          />
-        </label>
-        <label>
-          Type:
-          <select value={outputType} onChange={handleTypeChange}>
-            <option value="Text">Text</option>
-            <option value="File">Image</option>
-          </select>
-        </label>
-      </div>
-    </div>
-  );
-}
+export const OutputNode = (props) => {
+  return <NodeTemp {...props} specs={outputNodeSpecs} />;
+};
