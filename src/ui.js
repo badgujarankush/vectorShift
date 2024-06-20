@@ -12,6 +12,8 @@ import { OutputNode } from "./nodes/outputNode";
 import { TextNode } from "./nodes/textNode";
 
 import "reactflow/dist/style.css";
+import { NODE_TYPES } from "./nodes";
+import NodeTemp from "./components/NodeTemp";
 
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
@@ -26,12 +28,24 @@ const selector = (state) => ({
   onConnect: state.onConnect,
 });
 
-const nodeTypes = {
-  customInput: InputNode,
-  llm: LLMNode,
-  customOutput: OutputNode,
-  text: TextNode,
+const generateNodeTypes = () => {
+  const res = {};
+  Object.keys(NODE_TYPES).forEach((key) => {
+    res[key] = (props) => (
+      <NodeTemp {...props} type={key} specs={NODE_TYPES[key]} />
+    );
+  });
+  return res;
 };
+
+// const nodeTypes = {
+//   customInput: InputNode,
+//   llm: LLMNode,
+//   customOutput: OutputNode,
+//   text: TextNode,
+// };
+
+const nodeTypes = generateNodeTypes();
 
 export const PipelineUI = () => {
   const reactFlowWrapper = useRef(null);
@@ -45,8 +59,6 @@ export const PipelineUI = () => {
     onEdgesChange,
     onConnect,
   } = useStore(selector, shallow);
-
-  console.log("nlkvsfhjb", { nodes, edges });
 
   const getInitNodeData = (nodeID, type) => {
     let nodeData = { id: nodeID, nodeType: `${type}` };
@@ -95,7 +107,7 @@ export const PipelineUI = () => {
 
   return (
     <>
-      <div ref={reactFlowWrapper} style={{ width: "100wv", height: "70vh" }}>
+      <div ref={reactFlowWrapper} style={{ width: "100wv", height: "80vh" }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}

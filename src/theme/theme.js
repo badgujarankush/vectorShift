@@ -7,6 +7,7 @@ export const theme = createTheme({
       main: "#9061c6",
       light: "rgb(166, 128, 209)",
       dark: "rgb(100, 67, 138)",
+      hover: "#f8f2ff",
     },
     secondary: {
       main: "#f50057",

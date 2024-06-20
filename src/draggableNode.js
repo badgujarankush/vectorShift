@@ -2,7 +2,7 @@
 
 import { Box, Typography, useTheme } from "@mui/material";
 
-export const DraggableNode = ({ type, label }) => {
+export const DraggableNode = ({ type, label, Icon }) => {
   const theme = useTheme();
 
   const onDragStart = (event, nodeType) => {
@@ -20,7 +20,7 @@ export const DraggableNode = ({ type, label }) => {
       className={type}
       onDragStart={(event) => onDragStart(event, type)}
       onDragEnd={(event) => (event.target.style.cursor = "grab")}
-      style={{
+      sx={{
         cursor: "grab",
         minWidth: "80px",
         height: "80px",
@@ -28,12 +28,18 @@ export const DraggableNode = ({ type, label }) => {
         alignItems: "center",
         borderRadius: "8px",
         backgroundColor: "white",
-        border: `1px solid ${theme.palette.primary.main}`,
+        border: `1px solid ${theme.palette.primary.light}`,
         justifyContent: "center",
+        flexDirection: "column",
+        gap: "4px",
+        ":hover": {
+          backgroundColor: "primary.hover",
+        },
       }}
       draggable
     >
-      <Typography variant="body2" color="primay.main">
+      <Icon sx={{ color: "primary.main" }} />
+      <Typography fontSize={14} color="primay.main">
         {label}
       </Typography>
     </Box>

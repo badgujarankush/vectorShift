@@ -1,16 +1,29 @@
 // toolbar.js
 
+import { Box, Stack } from "@mui/material";
 import { DraggableNode } from "./draggableNode";
+import { NODE_TYPES } from "./nodes";
 
 export const PipelineToolbar = () => {
   return (
-    <div style={{ padding: "10px" }}>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-        <DraggableNode type="customInput" label="Input" />
-        <DraggableNode type="llm" label="LLM" />
-        <DraggableNode type="customOutput" label="Output" />
-        <DraggableNode type="text" label="Text" />
-      </div>
-    </div>
+    <Stack
+      direction="row"
+      alignItems="center"
+      flexWrap="wrap"
+      gap="10px"
+      sx={{
+        p: 1,
+        boxShadow: "0px 0px 24px 0px #00000014",
+      }}
+    >
+      {Object.entries(NODE_TYPES).map(([key, value]) => (
+        <DraggableNode
+          key={key}
+          type={key}
+          label={value?.label}
+          Icon={value.Icon}
+        />
+      ))}
+    </Stack>
   );
 };

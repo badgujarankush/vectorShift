@@ -7,36 +7,15 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Handle, Position, useUpdateNodeInternals } from "reactflow";
+import { Handle, useUpdateNodeInternals } from "reactflow";
 import { FIELD_TYPES } from "../constants";
 import { useStore } from "../store";
-
-const generateDefaultValues = ({ specs, data }) => {
-  let res = {};
-  specs?.fields?.forEach((field) => {
-    res[field.name] = data?.[field?.name] || field?.defaultValue;
-  });
-  return res;
-};
-
-const generateVariableHandles = (text) => {
-  const regex = /{{\s*(\w+)\s*}}/g;
-  const matches = Array.from(text.matchAll(regex)).map((match) => match[1]);
-
-  const newHandles = matches.map((match, index) => ({
-    type: "target",
-    position: Position.Left,
-    name: match,
-    label: match,
-    style: { top: `${(100 / (matches.length + 1)) * (index + 1)}%` },
-  }));
-
-  return newHandles;
-};
+import { generateDefaultValues, generateVariableHandles } from "../utils";
 
 const NodeTemp = ({ id, data, specs, style = {} }) => {
   const { edges } = useStore();
   const theme = useTheme();
+  const { label, Icon, fields, desc } = specs;
   const updateNodeInternals = useUpdateNodeInternals();
   const textAreaRef = useRef(null);
   const [values, setValues] = useState(null);
@@ -71,11 +50,16 @@ const NodeTemp = ({ id, data, specs, style = {} }) => {
 
   return (
     <Stack className="node-container" style={style}>
-      <Box mb={1}>
-        <Typography className="node-label">{specs.label}</Typography>
-      </Box>
+      <Stack gap={1} mb={1}>
+        <Stack direction="row" alignItems="center" gap={1}>
+          <Icon sx={{ fontSize: 16, color: "primary.main" }} />
+          <Typography className="node-label">{label}</Typography>
+        </Stack>
+        {desc && <Typography fontSize={12}>{desc}</Typography>}
+      </Stack>
+
       <Stack gap={1}>
-        {specs?.fields?.map((field, i) => (
+        {fields?.map((field, i) => (
           <Box key={i}>
             {field.type === FIELD_TYPES.SELECT ? (
               <Autocomplete
