@@ -12,10 +12,10 @@ import { FIELD_TYPES } from "../constants";
 import { useStore } from "../store";
 import { generateDefaultValues, generateVariableHandles } from "../utils";
 
-const NodeTemp = ({ id, data, specs, style = {} }) => {
+const NodeTemp = ({ id, data, specs }) => {
   const { edges } = useStore();
   const theme = useTheme();
-  const { label, Icon, fields, desc } = specs;
+  const { label, Icon, fields, desc, style = {} } = specs;
   const updateNodeInternals = useUpdateNodeInternals();
   const textAreaRef = useRef(null);
   const [values, setValues] = useState(null);

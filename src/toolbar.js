@@ -1,7 +1,7 @@
 // toolbar.js
 
-import { Box, Stack } from "@mui/material";
-import { DraggableNode } from "./draggableNode";
+import { Stack } from "@mui/material";
+import { DraggableNode } from "./components/draggableNode";
 import { NODE_TYPES } from "./nodes";
 
 export const PipelineToolbar = () => {

@@ -119,6 +119,7 @@ export const NODE_TYPES = {
         style: { top: "50%" },
       },
     ],
+    style: { width: "250px" },
   },
   [NODE.NOTE]: {
     label: "Note",
